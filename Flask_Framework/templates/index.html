@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flask Framework</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, #111827, #1f2937);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #d1d5db;
+    }
+
+    nav {
+      background: white;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #2563eb;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 0;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+      color: #2563eb;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #111827;
+    }
+
+    .code-box {
+      background: #111827;
+      color: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    footer {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 22px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Flask Framework</h1>
+    <p>Lightweight, Flexible & Powerful Python Web Framework</p>
+    <a href="#about" class="btn">Explore Flask</a>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#code">Code</a>
+    <a href="#projects">Projects</a>
+  </nav>
+
+  <section class="container" id="about">
+    <h2 class="section-title">What is Flask?</h2>
+
+    <div class="card">
+      <p>
+        Flask is a lightweight Python web framework used for building web applications,
+        REST APIs, dashboards, and machine learning deployment systems.
+        It is simple, beginner-friendly, and highly flexible.
+      </p>
+    </div>
+  </section>
+
+  <section class="container" id="features">
+    <h2 class="section-title">Why Developers Love Flask</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Lightweight</h3>
+        <p>Flask is minimal and easy to understand for beginners.</p>
+      </div>
+
+      <div class="card">
+        <h3>Flexible</h3>
+        <p>You can structure projects your own way without restrictions.</p>
+      </div>
+
+      <div class="card">
+        <h3>Fast Development</h3>
+        <p>Build APIs and web applications quickly using Python.</p>
+      </div>
+
+      <div class="card">
+        <h3>Data Science Friendly</h3>
+        <p>Deploy Machine Learning models and analytics systems easily.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="code">
+    <h2 class="section-title">Simple Flask Application</h2>
+
+    <div class="code-box">
+<pre>
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello Flask!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+</pre>
+    </div>
+  </section>
+
+  <section class="container" id="projects">
+    <h2 class="section-title">Projects You Can Build</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Student Management System</h3>
+        <p>Create CRUD applications with Flask and databases.</p>
+      </div>
+
+      <div class="card">
+        <h3>Machine Learning API</h3>
+        <p>Deploy ML models and serve predictions using Flask APIs.</p>
+      </div>
+
+      <div class="card">
+        <h3>Analytics Dashboard</h3>
+        <p>Visualize business insights and datasets in real time.</p>
+      </div>
+
+      <div class="card">
+        <h3>Website Monitoring Tool</h3>
+        <p>Track website uptime and server responses using Flask.</p>
+      </div>
+    </div>
+  </section>
