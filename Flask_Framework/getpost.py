@@ -1,39 +1,34 @@
-# We will be Integrating the Html in the flask 
+# GET and POST 
+from flask import Flask ,render_template,request
 
-from flask import Flask,render_template,request
+app=Flask(__name__) # giving an instance for the Class Flask 
 
-'''
-It Creates an instance of the class Flask 
-Which will be your Web server gateway interface Application  
-'''
+@app.route('/')
+def Wekcome ():
+    return render_template('home.html')
 
-app=Flask(__name__)
-
-@app.route("/")
-def Welcome():
-    return "<html><H1>Welcome To The Home Page ! </H1>We will be Creating Good Web Pages From Now </html>"
-
-@app.route("/Index")
-def Index ():
-    return render_template("index.html")
-
-@app.route("/About")
-def About ():
+@app.route("/about")
+def About():
     return render_template("about.html")
 
+@app.route('/Index')
+def index ():
+    return render_template("index.html")
 
-@app.route("/form", methods=["GET", "POST"])
-def form():
+@app.route('/form',methods=['GET','POST'])
+def form ():
+    if request.method=='POST':
+        name=request.form.get('username')
+        return render_template('sucess.html')
+    return render_template('form.html')
 
-    if request.method == "POST":
-
-        name = request.form.get('username')
-
-        return f"Hello {name} Sir"
-
+@app.route('/submit',methods=['GET','POST'])
+def Submit ():
+    if request.method=='POST':
+        name=request.form.get('username')
+        return render_template("success.html")
     return render_template('form.html')
 
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     app.run(debug=True)
-    
