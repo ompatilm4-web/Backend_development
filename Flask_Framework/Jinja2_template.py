@@ -98,7 +98,9 @@ def get_result():
         subject_5=float(request.getresult.get('sub5'))
         
         total_marks=(subject_1+subject_2+subject_3+subject_4+subject_5)/5
-        return redirect(url_for('success',score=total_marks))
+    else:
+        return render_template('getresult.html')
+    return redirect(url_for('Success',score=total_marks))
         
         
         
