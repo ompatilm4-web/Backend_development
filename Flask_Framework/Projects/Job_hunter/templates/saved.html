@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Saved Jobs</title>
+
+<style>
+
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Poppins;
+    margin:0;
+}
+
+/* Header */
+.header{
+    padding:40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header h1{
+    margin:0;
+}
+
+.back{
+    background:#2563eb;
+    padding:10px 16px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+}
+
+/* Grid */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+    gap:25px;
+    padding:0 40px 40px;
+}
+
+/* Card */
+.job{
+    background:#1e293b;
+    padding:25px;
+    border-radius:18px;
+    transition:0.2s;
+}
+
+.job:hover{
+    transform:translateY(-5px);
+}
+
+.job h2{
+    margin-bottom:10px;
+}
+
+.meta{
+    color:#cbd5e1;
+    margin-bottom:15px;
+}
+
+/* Buttons */
+.apply{
+    display:inline-block;
+    margin-top:10px;
+    background:#22c55e;
+    padding:10px 16px;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+}
+
+.delete{
+    display:inline-block;
+    margin-top:10px;
+    margin-left:10px;
+    background:#ef4444;
+    padding:10px 16px;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* Empty state */
+.empty{
+    text-align:center;
+    padding:80px 20px;
+    color:#94a3b8;
+}
+
+.empty a{
+    display:inline-block;
+    margin-top:15px;
+    background:#2563eb;
+    padding:10px 16px;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Saved Jobs</h1>
+    <a class="back" href="/jobs">← Back to Jobs</a>
+</div>
+
+{% if jobs and jobs|length > 0 %}
+
+<div class="grid">
+
+    {% for job in jobs %}
+
+    <div class="job">
+
+        <h2>{{ job.title }}</h2>
+
+        <p class="meta">{{ job.company }}</p>
+        <p class="meta">{{ job.location }}</p>
+
+        <a class="apply" href="{{ job.link }}" target="_blank">
+            Apply
+        </a>
+
+        <form action="/unsave" method="POST" style="display:inline;">
+            <input type="hidden" name="title" value="{{ job.title }}">
+            <button class="delete" type="submit">
+                Remove
+            </button>
+        </form>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+    <h2>No Saved Jobs Yet</h2>
+    <p>Start saving jobs you like and they will appear here.</p>
+
+    <a href="/jobs">Browse Jobs</a>
+
+</div>
+
+{% endif %}
+
+</body>
+</html>
