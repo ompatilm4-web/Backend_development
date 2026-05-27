@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-import requests
-import bs4
 
 import Core.database as db
+from Core.LinkedIn_data import scrape_jobs
 
 app = Flask(__name__)
 
@@ -19,21 +18,19 @@ def login():
 
     if request.method == 'POST':
 
-        df = db.Get_Data()
+        try:
 
-        email = request.form.get('email')
-        password = request.form.get('password')
+            df = db.Get_Data()
 
-        user = df[
-            (df['EMAIL'] == email) &
-            (df['PASSWORD'] == password)
-        ]
-
-        if not user.empty:
-            return render_template('home.html')
-
-        else:
-            return "Invalid Credentials"
+            email = request.form.get('email')
+            password = request.form.get('password')
+            user = df[(df['EMAIL'] == email) & (df['PASSWORD'] == password)]
+            if not user.empty:
+                return render_template('home.html')
+            else:
+                return "Invalid Credentials"
+        except Exception as e:
+            return f"Database Error: {e}"
 
     return render_template('login.html')
 
@@ -44,63 +41,48 @@ def register():
     return render_template('register.html')
 
 
+
 @app.route('/jobs')
 def jobs():
 
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
+    keyword = request.args.get(
+        'keyword',
+        'python'
+    )
 
-    url = "https://www.linkedin.com/jobs/search/?keywords=python"
-
-    response = requests.get(url, headers=headers)
-
-    soup = bs4.BeautifulSoup(response.text, 'html.parser')
-
-    jobs_list = []
-
-    # Example LinkedIn parsing
-    job_cards = soup.find_all('div', class_='base-search-card')
-
-    for job in job_cards:
-
-        title = job.find('h3')
-        company = job.find('h4')
-        location = job.find('span', class_='job-search-card__location')
-
-        jobs_list.append({
-            "title": title.text.strip() if title else "N/A",
-            "company": company.text.strip() if company else "N/A",
-            "location": location.text.strip() if location else "N/A"
-        })
+    jobs_list = scrape_jobs(keyword)
 
     return render_template(
         'jobs.html',
-        jobs=jobs_list
+        jobs=jobs_list,
+        keyword=keyword
     )
 
 
 
 @app.route('/savedjobs')
 def saved():
-    return render_template('savedjobs.html')
+    return render_template('saved.html')
 
 
 
 @app.route('/api/jobs')
 def api_jobs():
 
-    sample_jobs = [
-        {
-            "title": "Python Developer",
-            "company": "Microsoft",
-            "location": "Remote"
-        }
-    ]
+    keyword = request.args.get(
+        'keyword',
+        'python'
+    )
 
-    return jsonify(sample_jobs)
+    jobs_list = scrape_jobs(keyword)
+
+    return jsonify(jobs_list)
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+
+    app.run(
+        debug=True,
+        port=8080
+    )
